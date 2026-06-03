@@ -306,6 +306,21 @@ section:nth-child(even){background:var(--bg-alt);}
 .cta-dl{display:inline-flex;align-items:center;gap:0.45rem;background:rgba(255,255,255,0.1);color:#fff;padding:0.78rem 1.5rem;border-radius:7px;font-family:'Syne',sans-serif;font-size:0.82rem;font-weight:600;text-decoration:none;border:1px solid rgba(255,255,255,0.15);transition:all 0.2s;}
 .cta-dl:hover{background:rgba(255,255,255,0.16);}
 
+/* CONTACT FORM */
+.contact-form{background:var(--navy);color:#fff;border-radius:16px;padding:2.2rem;display:flex;flex-direction:column;gap:1rem;position:relative;overflow:hidden;box-shadow:var(--shadow-navy);}
+.contact-form::before{content:'';position:absolute;top:-60px;right:-60px;width:180px;height:180px;background:radial-gradient(circle,rgba(79,70,229,0.25),transparent 70%);border-radius:50%;pointer-events:none;}
+.contact-form::after{content:'';position:absolute;bottom:-40px;left:-40px;width:140px;height:140px;background:radial-gradient(circle,rgba(99,102,241,0.12),transparent 70%);border-radius:50%;pointer-events:none;}
+.form-group{display:flex;flex-direction:column;gap:0.35rem;position:relative;z-index:1;}
+.form-group label{font-family:'JetBrains Mono',monospace;font-size:0.68rem;color:rgba(255,255,255,0.5);letter-spacing:0.1em;text-transform:uppercase;font-weight:600;}
+.form-group input,.form-group textarea{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:0.7rem 0.95rem;font-family:'Outfit',sans-serif;font-size:0.88rem;color:#fff;outline:none;transition:border-color 0.18s,background 0.18s;width:100%;resize:none;}
+.form-group input::placeholder,.form-group textarea::placeholder{color:rgba(255,255,255,0.28);}
+.form-group input:focus,.form-group textarea:focus{border-color:rgba(165,180,252,0.55);background:rgba(255,255,255,0.1);}
+.form-submit{cursor:pointer;border:none;font-size:0.85rem;padding:0.82rem 1.6rem;align-self:flex-start;position:relative;z-index:1;}
+.form-submit:disabled{opacity:0.6;cursor:not-allowed;transform:none;}
+.form-status{font-family:'JetBrains Mono',monospace;font-size:0.75rem;position:relative;z-index:1;min-height:1.1rem;}
+.form-status.ok{color:#6EE7B7;}
+.form-status.err{color:#FCA5A5;}
+
 /* FOOTER */
 footer{background:var(--navy);padding:2rem 5%;position:relative;z-index:1;}
 .footer-inner{display:flex;align-items:center;justify-content:space-between;gap:1.25rem;flex-wrap:wrap;}
@@ -724,16 +739,24 @@ footer{background:var(--navy);padding:2rem 5%;position:relative;z-index:1;}
       <a href="https://github.com/SGraceGrace" target="_blank" rel="noopener noreferrer" class="ct-item"><span class="ct-icon">🐙</span><div><div class="ct-lbl">GitHub</div><div class="ct-val">SGraceGrace</div></div></a>
       <a href="https://leetcode.com/u/grace58" target="_blank" rel="noopener noreferrer" class="ct-item"><span class="ct-icon">💻</span><div><div class="ct-lbl">LeetCode</div><div class="ct-val">grace58</div></div></a>
     </div>
-    <div class="cta-box">
-      <div>
-        <p class="cta-h">Ready to <span>hire</span> a backend engineer?</p>
-        <p class="cta-p">2+ years of production Java experience. Spring Boot, microservices, MongoDB — I build systems that scale and stay reliable under pressure. Open to global opportunities.</p>
+    <form class="contact-form" id="contactForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" novalidate>
+      <p class="cta-h" style="margin-bottom:0.2rem;">Send me a <span style="color:#A5B4FC;">message</span></p>
+      <p style="font-size:0.82rem;color:rgba(255,255,255,0.45);margin-bottom:0.4rem;position:relative;z-index:1;">I'll reply within 24 hours.</p>
+      <div class="form-group">
+        <label for="cf-name">Name</label>
+        <input type="text" id="cf-name" name="name" placeholder="Your name" required>
       </div>
-      <div class="cta-actions">
-        <a href="mailto:gracechandra75@gmail.com" class="cta-btn">✉ Send Email</a>
-        <a href="assets/Grace_Sadhasivam_Resume.pdf" download class="cta-dl">⬇ Download Resume</a>
+      <div class="form-group">
+        <label for="cf-email">Email</label>
+        <input type="email" id="cf-email" name="email" placeholder="your@email.com" required>
       </div>
-    </div>
+      <div class="form-group">
+        <label for="cf-msg">Message</label>
+        <textarea id="cf-msg" name="message" rows="4" placeholder="I'd like to discuss..." required></textarea>
+      </div>
+      <button type="submit" class="cta-btn form-submit" id="cfBtn">✉ Send Message</button>
+      <p class="form-status" id="cfStatus"></p>
+    </form>
   </div>
 </section>
 
@@ -845,6 +868,28 @@ const sb=document.getElementById('stickyBtn');
 function checkMobile(){sb.style.display=window.innerWidth<=768?'flex':'none';}
 checkMobile();
 window.addEventListener('resize',checkMobile);
+
+// CONTACT FORM
+document.getElementById('contactForm').addEventListener('submit',async function(e){
+  e.preventDefault();
+  const btn=document.getElementById('cfBtn');
+  const status=document.getElementById('cfStatus');
+  btn.disabled=true;btn.textContent='Sending…';
+  status.className='form-status';status.textContent='';
+  try{
+    const res=await fetch(this.action,{method:'POST',body:new FormData(this),headers:{Accept:'application/json'}});
+    if(res.ok){
+      status.className='form-status ok';status.textContent='✓ Message sent! I\'ll reply soon.';
+      this.reset();
+    }else{
+      const d=await res.json();
+      status.className='form-status err';status.textContent=d.errors?d.errors.map(x=>x.message).join(', '):'Something went wrong. Please email directly.';
+    }
+  }catch{
+    status.className='form-status err';status.textContent='Network error. Please try again.';
+  }
+  btn.disabled=false;btn.textContent='✉ Send Message';
+});
 </script>
 </body>
 </html>
