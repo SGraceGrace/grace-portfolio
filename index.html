@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Grace Sadhasivam — Java Backend Developer. Spring Boot, Microservices, MongoDB, Elasticsearch. Open to global opportunities.">
+<title>Grace Sadhasivam — Java Backend Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  /* Base */
+  --bg:#FFFFFF;
+  --bg-alt:#F8FAFC;
+  --card:#FFFFFF;
+
+  /* Text hierarchy */
+  --text:#0F172A;
+  --text-sub:#1E293B;
+  --muted:#475569;
+  --light:#64748B;
+
+  /* Navy — authority, buttons, headings */
+  --navy:#0F172A;
+  --navy2:#1E293B;
+  --navy3:#334155;
+
+  /* Indigo — accent only: labels, stats, active nav, card lines */
+  --indigo:#4F46E5;
+  --indigo-h:#4338CA;
+  --indigo-dim:rgba(79,70,229,0.07);
+  --indigo-tag:#EEF2FF;
+  --indigo-tag-txt:#4338CA;
+
+  /* Borders */
+  --border:#E2E8F0;
+  --border-h:rgba(79,70,229,0.22);
+
+  /* Status */
+  --green:#059669;
+  --green-tag:#D1FAE5;
+  --green-txt:#065F46;
+
+  /* Shadows */
+  --shadow:0 1px 12px rgba(15,23,42,0.06);
+  --shadow-md:0 4px 20px rgba(15,23,42,0.09);
+  --shadow-lg:0 12px 40px rgba(15,23,42,0.11);
+  --shadow-navy:0 8px 28px rgba(15,23,42,0.2);
+  --shadow-indigo:0 6px 20px rgba(79,70,229,0.14);
+
+  --radius:12px;
+  --section-gap:96px;
+}
+
+html{scroll-behavior:smooth;font-size:16px;}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;line-height:1.6;-webkit-font-smoothing:antialiased;}
+
+/* SKIP LINK */
+.skip-link{position:absolute;top:-100px;left:1rem;z-index:9999;background:var(--navy);color:#fff;padding:0.5rem 1rem;border-radius:0 0 8px 8px;font-size:0.85rem;font-weight:600;text-decoration:none;transition:top 0.2s;}
+.skip-link:focus{top:0;}
+
+/* PARTICLES */
+#particles{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:0.5;}
+.grid-bg{position:fixed;top:0;left:0;right:0;bottom:0;z-index:0;pointer-events:none;
+  background-image:linear-gradient(rgba(79,70,229,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(79,70,229,0.03) 1px,transparent 1px);
+  background-size:64px 64px;}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:100;height:64px;padding:0 5%;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,0.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);box-shadow:0 1px 0 var(--border);}
+.nav-logo{font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:800;color:var(--navy);text-decoration:none;letter-spacing:-0.02em;}
+.nav-logo .dot{color:var(--indigo);}
+.nav-links{display:flex;gap:0.1rem;list-style:none;}
+.nav-links a{font-family:'JetBrains Mono',monospace;font-size:0.72rem;font-weight:500;color:var(--muted);text-decoration:none;padding:0.38rem 0.65rem;border-radius:6px;border:1px solid transparent;transition:all 0.18s;}
+.nav-links a:hover,.nav-links a.active{color:var(--indigo);background:var(--indigo-dim);border-color:var(--border-h);}
+.nav-right{display:flex;align-items:center;gap:0.65rem;}
+.nav-cta{font-family:'Syne',sans-serif;font-size:0.8rem;font-weight:700;background:var(--navy);color:#fff;padding:0.46rem 1.1rem;border-radius:7px;text-decoration:none;transition:all 0.18s;display:flex;align-items:center;gap:0.35rem;white-space:nowrap;}
+.nav-cta:hover{background:var(--navy2);transform:translateY(-1px);box-shadow:var(--shadow-navy);}
+.nav-cta svg{width:13px;height:13px;}
+
+/* HAMBURGER */
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;background:none;border:none;border-radius:6px;}
+.hamburger span{display:block;width:20px;height:2px;background:var(--navy);border-radius:2px;transition:all 0.3s;}
+.hamburger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px);}
+.hamburger.open span:nth-child(2){opacity:0;}
+.hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px);}
+
+/* DRAWER */
+.drawer-overlay{position:fixed;inset:0;background:rgba(15,23,42,0.25);z-index:90;display:none;backdrop-filter:blur(3px);}
+.drawer-overlay.open{display:block;}
+.mobile-drawer{position:fixed;top:0;right:-100%;width:72%;max-width:280px;height:100vh;background:var(--card);z-index:95;padding:80px 1.5rem 2rem;display:flex;flex-direction:column;gap:0.35rem;box-shadow:-4px 0 30px rgba(15,23,42,0.1);transition:right 0.32s cubic-bezier(0.4,0,0.2,1);border-left:1px solid var(--border);}
+.mobile-drawer.open{right:0;}
+.mobile-drawer a{font-family:'JetBrains Mono',monospace;font-size:0.82rem;color:var(--muted);text-decoration:none;padding:0.65rem 1rem;border-radius:7px;border:1px solid transparent;transition:all 0.18s;font-weight:500;}
+.mobile-drawer a:hover,.mobile-drawer a.active{color:var(--indigo);background:var(--indigo-dim);border-color:var(--border-h);}
+.drawer-resume{margin-top:1rem;background:var(--navy) !important;color:#fff !important;text-align:center;border-radius:7px;font-family:'Syne',sans-serif !important;font-weight:700 !important;}
+
+/* STICKY MOBILE RESUME */
+.mobile-sticky-resume{display:none;position:fixed;bottom:1.25rem;right:1.25rem;z-index:80;background:var(--navy);color:#fff;font-family:'Syne',sans-serif;font-size:0.8rem;font-weight:700;padding:0.7rem 1.2rem;border-radius:50px;text-decoration:none;box-shadow:var(--shadow-navy);align-items:center;gap:0.4rem;transition:all 0.2s;}
+.mobile-sticky-resume:hover{background:var(--navy2);}
+.mobile-sticky-resume svg{width:14px;height:14px;}
+
+/* SECTIONS */
+main{position:relative;z-index:1;}
+section{padding:var(--section-gap) 5%;}
+section:nth-child(even){background:var(--bg-alt);}
+
+/* SECTION HEADINGS */
+.sec-label{font-family:'JetBrains Mono',monospace;font-size:0.68rem;color:var(--indigo);letter-spacing:0.18em;text-transform:uppercase;margin-bottom:0.45rem;display:flex;align-items:center;gap:0.5rem;font-weight:600;}
+.sec-label::before{content:'//';color:var(--light);}
+.sec-title{font-family:'Syne',sans-serif;font-size:clamp(1.75rem,3vw,2.6rem);font-weight:800;letter-spacing:-0.03em;color:var(--navy);margin-bottom:0.6rem;line-height:1.1;}
+.sec-title span{color:var(--indigo);}
+.sec-bar{width:32px;height:3px;background:var(--indigo);border-radius:2px;margin-bottom:1.2rem;}
+.sec-desc{font-size:0.97rem;color:var(--muted);max-width:540px;line-height:1.8;margin-bottom:2.5rem;font-weight:400;}
+
+/* HERO */
+#hero{min-height:calc(100vh - 64px);display:grid;grid-template-columns:1fr 440px;gap:3rem;align-items:center;padding-top:72px;padding-bottom:72px;}
+.hero-left{display:flex;flex-direction:column;}
+
+.hero-status{display:inline-flex;align-items:center;gap:0.55rem;font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--green);background:var(--green-tag);border:1px solid rgba(5,150,105,0.22);padding:0.34rem 0.9rem;border-radius:5px;margin-bottom:1.5rem;letter-spacing:0.07em;font-weight:500;width:fit-content;}
+.sdot{width:6px;height:6px;background:var(--green);border-radius:50%;animation:pg 2s infinite;flex-shrink:0;}
+@keyframes pg{0%,100%{box-shadow:0 0 0 0 rgba(5,150,105,0.4);}50%{box-shadow:0 0 0 5px rgba(5,150,105,0);}}
+
+.hero-title{font-family:'Syne',sans-serif;font-size:clamp(2.4rem,4.8vw,4.4rem);font-weight:800;line-height:1.0;letter-spacing:-0.04em;color:var(--navy);margin-bottom:0.5rem;}
+.hero-title .line2{display:block;color:var(--indigo);}
+
+.hero-role{font-family:'JetBrains Mono',monospace;font-size:0.88rem;color:var(--muted);margin:1rem 0 1.2rem;display:flex;align-items:center;gap:0.3rem;}
+.role-prefix{color:var(--indigo);font-weight:600;}
+.cblink{animation:blink 1s step-end infinite;color:var(--indigo);}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
+
+.hero-desc{font-size:0.97rem;color:var(--muted);line-height:1.8;max-width:500px;margin-bottom:1.8rem;font-weight:400;}
+
+.hero-stats{display:flex;gap:2rem;padding:1.2rem 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin-bottom:1.8rem;flex-wrap:wrap;}
+.stat-num{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;color:var(--indigo);line-height:1;}
+.stat-lbl{font-size:0.65rem;color:var(--light);margin-top:0.2rem;font-weight:600;letter-spacing:0.09em;text-transform:uppercase;}
+
+.hero-btns{display:flex;gap:0.6rem;align-items:center;flex-wrap:wrap;margin-bottom:1.4rem;}
+.btn-primary{background:var(--navy);color:#fff;padding:0.78rem 1.5rem;border-radius:7px;font-family:'Syne',sans-serif;font-size:0.84rem;font-weight:700;text-decoration:none;transition:all 0.2s;}
+.btn-primary:hover{background:var(--navy2);transform:translateY(-2px);box-shadow:var(--shadow-navy);}
+.btn-ghost{background:transparent;color:var(--navy);border:1.5px solid var(--navy);padding:0.76rem 1.5rem;border-radius:7px;font-family:'Syne',sans-serif;font-size:0.84rem;font-weight:600;text-decoration:none;transition:all 0.2s;}
+.btn-ghost:hover{background:var(--bg-alt);}
+.btn-outline{background:transparent;color:var(--navy);border:1.5px solid var(--border);padding:0.76rem 1.5rem;border-radius:7px;font-family:'Syne',sans-serif;font-size:0.84rem;font-weight:600;text-decoration:none;transition:all 0.2s;display:flex;align-items:center;gap:0.45rem;}
+.btn-outline:hover{border-color:var(--indigo);color:var(--indigo);background:var(--indigo-dim);}
+.btn-outline svg{width:14px;height:14px;}
+
+.hero-socials{display:flex;gap:0.5rem;align-items:center;}
+.social-btn{display:inline-flex;align-items:center;justify-content:center;gap:0.4rem;font-family:'JetBrains Mono',monospace;font-size:0.72rem;font-weight:500;color:var(--muted);text-decoration:none;padding:0.4rem 0.85rem;border-radius:6px;border:1px solid var(--border);background:var(--card);transition:all 0.18s;box-shadow:var(--shadow);}
+.social-btn svg{width:13px;height:13px;flex-shrink:0;}
+.social-btn:hover{color:var(--indigo);border-color:var(--border-h);background:var(--indigo-dim);}
+
+/* HERO VISUAL */
+.hero-visual{position:relative;display:flex;align-items:center;justify-content:center;}
+.code-window{background:var(--navy);border-radius:14px;width:100%;box-shadow:0 24px 64px rgba(15,23,42,0.18),0 0 0 1px rgba(255,255,255,0.04);overflow:hidden;animation:float 6s ease-in-out infinite;}
+@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+.win-bar{background:#1E293B;padding:0.8rem 1.2rem;display:flex;align-items:center;gap:0.55rem;border-bottom:1px solid rgba(255,255,255,0.05);}
+.wd{width:11px;height:11px;border-radius:50%;}
+.wd.r{background:#FF5F57;}.wd.y{background:#FFBD2E;}.wd.g{background:#28C840;}
+.wf{margin-left:0.5rem;font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:#475569;}
+.code-body{padding:1.1rem 1.3rem;font-family:'JetBrains Mono',monospace;font-size:0.72rem;line-height:1.85;background:#0F172A;}
+.ln{color:#2D3F55;margin-right:0.9rem;user-select:none;font-size:0.63rem;}
+.kw{color:#C084FC;}.cl{color:#34D399;}.fn{color:#818CF8;}.st{color:#A5B4FC;}.cm{color:#3D5166;font-style:italic;}.va{color:#FB923C;}.nu{color:#6366F1;}
+
+/* HERO PHOTO */
+.hero-photo-wrap{position:absolute;bottom:-12px;right:-12px;width:148px;height:188px;z-index:4;}
+.hero-photo-shape{width:140px;height:180px;background:var(--indigo-tag);border-radius:98px 98px 68px 68px;position:absolute;bottom:0;left:50%;transform:translateX(-50%);border:1px solid rgba(79,70,229,0.15);}
+.hero-photo-img{width:132px;height:170px;object-fit:cover;object-position:top center;border-radius:88px 88px 58px 58px;position:absolute;bottom:0;left:50%;transform:translateX(-50%);z-index:2;border:2px solid rgba(79,70,229,0.18);}
+
+/* TECH BADGES */
+.tbadge{position:absolute;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:0.38rem 0.75rem;display:flex;align-items:center;gap:0.4rem;font-size:0.72rem;font-weight:600;color:var(--navy);box-shadow:var(--shadow);z-index:3;animation:fbadge 5s ease-in-out infinite;font-family:'JetBrains Mono',monospace;}
+@keyframes fbadge{0%,100%{transform:translateY(0);}50%{transform:translateY(-7px);}}
+
+/* ABOUT */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;align-items:start;}
+.about-text p{font-size:0.97rem;color:var(--muted);line-height:1.85;margin-bottom:1rem;font-weight:400;}
+.about-text p strong{color:var(--navy);font-weight:700;}
+.about-cards{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.about-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.3rem;box-shadow:var(--shadow);transition:all 0.22s;position:relative;overflow:hidden;}
+.about-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--indigo);transform:scaleX(0);transform-origin:left;transition:transform 0.3s;}
+.about-card:hover{border-color:var(--border-h);box-shadow:var(--shadow-indigo);transform:translateY(-2px);}
+.about-card:hover::before{transform:scaleX(1);}
+.about-card-num{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:var(--indigo);line-height:1;margin-bottom:0.3rem;}
+.about-card-lbl{font-size:0.82rem;color:var(--muted);font-weight:500;line-height:1.4;}
+
+/* SKILLS */
+.sk-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem;}
+.sk-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.3rem;box-shadow:var(--shadow);transition:all 0.22s;position:relative;overflow:hidden;}
+.sk-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--indigo);transform:scaleX(0);transform-origin:left;transition:transform 0.3s;}
+.sk-card:hover{border-color:var(--border-h);box-shadow:var(--shadow-indigo);transform:translateY(-2px);}
+.sk-card:hover::before{transform:scaleX(1);}
+.skh{font-family:'JetBrains Mono',monospace;font-size:0.68rem;color:var(--indigo);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.85rem;display:flex;align-items:center;gap:0.45rem;font-weight:600;}
+.stags{display:flex;flex-wrap:wrap;gap:0.38rem;}
+.stag{background:var(--indigo-tag);color:var(--indigo-tag-txt);font-size:0.73rem;font-weight:600;padding:0.25rem 0.68rem;border-radius:5px;border:1px solid rgba(79,70,229,0.12);font-family:'JetBrains Mono',monospace;transition:all 0.18s;cursor:default;}
+.stag:hover{background:var(--indigo);color:#fff;border-color:var(--indigo);}
+
+/* TECH WALL */
+.tech-wall{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:0.85rem;}
+.tech-item{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.1rem 0.7rem;display:flex;flex-direction:column;align-items:center;gap:0.5rem;box-shadow:var(--shadow);transition:all 0.22s;}
+.tech-item:hover{border-color:var(--border-h);transform:translateY(-3px);box-shadow:var(--shadow-indigo);}
+.tech-logo{font-size:1.75rem;line-height:1;}
+.tech-name{font-family:'JetBrains Mono',monospace;font-size:0.66rem;font-weight:600;color:var(--muted);text-align:center;letter-spacing:0.03em;}
+.tech-item:hover .tech-name{color:var(--indigo);}
+
+/* CURRENTLY LEARNING */
+.learning-grid{display:flex;flex-wrap:wrap;gap:0.7rem;}
+.learn-badge{display:inline-flex;align-items:center;gap:0.5rem;background:var(--card);border:1px solid var(--border);border-radius:50px;padding:0.52rem 1.1rem;font-family:'JetBrains Mono',monospace;font-size:0.77rem;font-weight:600;color:var(--muted);box-shadow:var(--shadow);transition:all 0.22s;}
+.learn-badge:hover{border-color:var(--border-h);color:var(--indigo);background:var(--indigo-dim);transform:translateY(-2px);}
+.learn-badge .l-icon{font-size:0.95rem;}
+.learn-badge .l-status{font-size:0.6rem;color:var(--indigo);background:var(--indigo-tag);padding:0.1rem 0.42rem;border-radius:20px;font-weight:700;letter-spacing:0.04em;margin-left:0.2rem;border:1px solid rgba(79,70,229,0.12);}
+
+/* SYSTEM DESIGN */
+.sd-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:1rem;}
+.sd-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.4rem;box-shadow:var(--shadow);transition:all 0.22s;position:relative;overflow:hidden;}
+.sd-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--indigo);transform:scaleX(0);transform-origin:left;transition:transform 0.3s;}
+.sd-card:hover{border-color:var(--border-h);box-shadow:var(--shadow-indigo);transform:translateY(-3px);}
+.sd-card:hover::after{transform:scaleX(1);}
+.sd-icon{font-size:1.55rem;margin-bottom:0.7rem;line-height:1;}
+.sd-title{font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:700;color:var(--navy);margin-bottom:0.4rem;}
+.sd-desc{font-size:0.82rem;color:var(--muted);line-height:1.6;}
+
+/* EXPERIENCE */
+.exp-timeline{display:flex;flex-direction:column;gap:1.2rem;}
+.exp-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.8rem 2rem;box-shadow:var(--shadow);position:relative;overflow:hidden;transition:all 0.22s;}
+.exp-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3.5px;background:var(--indigo);border-radius:3px 0 0 3px;}
+.exp-card:hover{box-shadow:var(--shadow-indigo);border-color:var(--border-h);}
+.exp-top{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:0.25rem;flex-wrap:wrap;}
+.exp-role{font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:700;color:var(--navy);}
+.exp-pill{font-family:'JetBrains Mono',monospace;font-size:0.65rem;font-weight:600;padding:0.22rem 0.7rem;border-radius:4px;white-space:nowrap;background:var(--indigo-tag);color:var(--indigo-tag-txt);border:1px solid rgba(79,70,229,0.15);}
+.exp-pill.now{background:var(--green-tag);color:var(--green-txt);border-color:rgba(5,150,105,0.2);}
+.exp-co{font-family:'JetBrains Mono',monospace;font-size:0.8rem;color:var(--indigo);font-weight:500;margin-bottom:1.1rem;}
+.exp-ul{list-style:none;display:flex;flex-direction:column;gap:0.55rem;}
+.exp-ul li{font-size:0.9rem;color:var(--muted);line-height:1.75;padding-left:1.3rem;position:relative;}
+.exp-ul li::before{content:'›';position:absolute;left:0;color:var(--indigo);font-size:1rem;font-weight:700;top:0;}
+
+/* PROJECTS */
+.pj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.3rem;}
+.pj-card{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:var(--shadow);transition:all 0.22s;display:flex;flex-direction:column;}
+.pj-card:hover{box-shadow:var(--shadow-indigo),0 0 0 1px rgba(79,70,229,0.12);transform:translateY(-4px);}
+.pj-card.featured{grid-column:1/-1;border:1.5px solid rgba(79,70,229,0.4);box-shadow:0 0 0 3px rgba(79,70,229,0.06),var(--shadow-md);display:grid;grid-template-columns:1fr 1fr;}
+.pj-card.featured:hover{transform:translateY(-3px);box-shadow:0 0 0 3px rgba(79,70,229,0.1),var(--shadow-indigo);}
+.featured-badge{display:inline-flex;align-items:center;gap:0.35rem;background:var(--indigo);color:#fff;font-family:'JetBrains Mono',monospace;font-size:0.63rem;font-weight:700;letter-spacing:0.1em;padding:0.24rem 0.75rem;border-radius:4px;margin-bottom:0.55rem;text-transform:uppercase;width:fit-content;}
+.pj-header{background:var(--navy);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;min-height:140px;}
+.pj-card.featured .pj-header{min-height:100%;border-radius:0;}
+.pj-code{font-family:'JetBrains Mono',monospace;font-size:0.6rem;color:rgba(165,180,252,0.45);line-height:1.9;padding:1rem 1.1rem;text-align:left;width:100%;}
+.pj-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:80px;height:80px;border-radius:50%;background:radial-gradient(circle,rgba(79,70,229,0.12),transparent 70%);}
+.pj-top-line{position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--indigo),#818CF8);}
+.pj-body{padding:1.3rem;flex:1;display:flex;flex-direction:column;gap:0.6rem;}
+.pj-num{font-family:'JetBrains Mono',monospace;font-size:0.63rem;color:var(--light);letter-spacing:0.08em;}
+.pj-name{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;color:var(--navy);}
+.pj-tags{display:flex;flex-wrap:wrap;gap:0.3rem;}
+.ptag{background:var(--indigo-tag);color:var(--indigo-tag-txt);font-size:0.67rem;font-weight:600;padding:0.18rem 0.55rem;border-radius:4px;border:1px solid rgba(79,70,229,0.12);font-family:'JetBrains Mono',monospace;}
+.pj-desc{font-size:0.87rem;color:var(--muted);line-height:1.7;flex:1;}
+.arch-section{margin-top:0.75rem;padding-top:0.75rem;border-top:1px solid var(--border);}
+.arch-title{font-family:'JetBrains Mono',monospace;font-size:0.63rem;color:var(--indigo);text-transform:uppercase;letter-spacing:0.1em;font-weight:700;margin-bottom:0.48rem;}
+.arch-tags{display:flex;flex-wrap:wrap;gap:0.3rem;}
+.arch-tag{display:inline-flex;align-items:center;gap:0.28rem;background:var(--indigo-dim);color:var(--indigo-tag-txt);font-family:'JetBrains Mono',monospace;font-size:0.63rem;font-weight:600;padding:0.2rem 0.55rem;border-radius:4px;border:1px solid rgba(79,70,229,0.12);}
+.arch-tag::before{content:'✓';font-size:0.58rem;color:var(--indigo);}
+.pj-actions{display:flex;gap:0.45rem;margin-top:0.65rem;}
+.pj-btn{display:inline-flex;align-items:center;gap:0.38rem;font-family:'JetBrains Mono',monospace;font-size:0.7rem;font-weight:600;padding:0.38rem 0.85rem;border-radius:6px;text-decoration:none;transition:all 0.18s;background:var(--navy);color:#fff;border:1px solid var(--navy);}
+.pj-btn:hover{background:var(--navy2);}
+.pj-btn svg{width:12px;height:12px;flex-shrink:0;}
+
+/* ACHIEVEMENTS */
+.ach-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem;}
+.ach-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.4rem;box-shadow:var(--shadow);transition:all 0.22s;text-align:center;position:relative;overflow:hidden;}
+.ach-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--indigo);}
+.ach-card:hover{border-color:var(--border-h);box-shadow:var(--shadow-indigo);transform:translateY(-3px);}
+.ach-icon{font-size:1.5rem;margin-bottom:0.55rem;}
+.ach-num{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:var(--indigo);line-height:1;margin-bottom:0.25rem;}
+.ach-label{font-family:'Syne',sans-serif;font-size:0.88rem;font-weight:700;color:var(--navy);margin-bottom:0.3rem;}
+.ach-sub{font-size:0.78rem;color:var(--muted);line-height:1.5;}
+
+/* EDUCATION */
+.edu-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.8rem 2rem;box-shadow:var(--shadow);transition:all 0.22s;display:flex;align-items:flex-start;gap:1.5rem;margin-bottom:1.2rem;}
+.edu-card:hover{box-shadow:var(--shadow-indigo);border-color:var(--border-h);}
+.edu-icon-box{width:50px;height:50px;min-width:50px;background:var(--indigo-tag);border:1px solid rgba(79,70,229,0.15);border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;}
+.edu-deg{font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:700;color:var(--navy);margin-bottom:0.2rem;}
+.edu-school{font-family:'JetBrains Mono',monospace;font-size:0.8rem;color:var(--indigo);margin-bottom:0.2rem;}
+.edu-year{font-size:0.78rem;color:var(--light);margin-bottom:0.6rem;}
+.gpa{display:inline-flex;align-items:center;gap:0.35rem;background:var(--green-tag);color:var(--green-txt);font-family:'JetBrains Mono',monospace;font-size:0.78rem;font-weight:700;padding:0.3rem 0.8rem;border-radius:5px;border:1px solid rgba(5,150,105,0.18);}
+.cert-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:0.85rem;}
+.cert-c{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:0.9rem 1.2rem;display:flex;align-items:center;gap:0.75rem;font-size:0.86rem;color:var(--navy);font-weight:500;box-shadow:var(--shadow);transition:all 0.18s;}
+.cert-c:hover{border-color:var(--border-h);transform:translateY(-2px);}
+.ci{font-size:1.15rem;}
+
+/* CONTACT */
+.contact-wrap{display:grid;grid-template-columns:1fr 1fr;gap:2rem;}
+.ct-links{display:flex;flex-direction:column;gap:0.7rem;}
+.ct-item{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:0.9rem 1.2rem;display:flex;align-items:center;gap:0.85rem;text-decoration:none;color:var(--navy);box-shadow:var(--shadow);transition:all 0.2s;}
+.ct-item:hover{border-color:var(--border-h);transform:translateX(4px);box-shadow:var(--shadow-indigo);}
+.ct-icon{font-size:1.1rem;flex-shrink:0;}
+.ct-lbl{font-family:'JetBrains Mono',monospace;font-size:0.63rem;color:var(--indigo);letter-spacing:0.08em;text-transform:uppercase;font-weight:600;}
+.ct-val{font-size:0.86rem;color:var(--navy);font-weight:500;}
+.ct-item.relocation{background:var(--indigo);border-color:var(--indigo);}
+.ct-item.relocation .ct-lbl{color:rgba(255,255,255,0.65);}
+.ct-item.relocation .ct-val{color:#fff;font-weight:600;}
+.ct-item.relocation .ct-icon{filter:grayscale(1) brightness(10);}
+
+.cta-box{background:var(--navy);color:#fff;border-radius:16px;padding:2.2rem;display:flex;flex-direction:column;justify-content:space-between;min-height:290px;position:relative;overflow:hidden;box-shadow:var(--shadow-navy);}
+.cta-box::before{content:'';position:absolute;top:-60px;right:-60px;width:180px;height:180px;background:radial-gradient(circle,rgba(79,70,229,0.25),transparent 70%);border-radius:50%;}
+.cta-box::after{content:'';position:absolute;bottom:-40px;left:-40px;width:140px;height:140px;background:radial-gradient(circle,rgba(99,102,241,0.12),transparent 70%);border-radius:50%;}
+.cta-h{font-family:'Syne',sans-serif;font-size:1.65rem;font-weight:800;line-height:1.2;margin-bottom:0.8rem;position:relative;z-index:1;}
+.cta-h span{color:#A5B4FC;}
+.cta-p{font-size:0.88rem;color:rgba(255,255,255,0.55);line-height:1.7;position:relative;z-index:1;}
+.cta-actions{display:flex;gap:0.6rem;flex-wrap:wrap;margin-top:1.8rem;position:relative;z-index:1;}
+.cta-btn{display:inline-flex;align-items:center;gap:0.45rem;background:#fff;color:var(--navy);padding:0.78rem 1.5rem;border-radius:7px;font-family:'Syne',sans-serif;font-size:0.82rem;font-weight:700;text-decoration:none;transition:all 0.2s;}
+.cta-btn:hover{background:var(--indigo-tag);transform:translateY(-1px);}
+.cta-dl{display:inline-flex;align-items:center;gap:0.45rem;background:rgba(255,255,255,0.1);color:#fff;padding:0.78rem 1.5rem;border-radius:7px;font-family:'Syne',sans-serif;font-size:0.82rem;font-weight:600;text-decoration:none;border:1px solid rgba(255,255,255,0.15);transition:all 0.2s;}
+.cta-dl:hover{background:rgba(255,255,255,0.16);}
+
+/* FOOTER */
+footer{background:var(--navy);padding:2rem 5%;position:relative;z-index:1;}
+.footer-inner{display:flex;align-items:center;justify-content:space-between;gap:1.25rem;flex-wrap:wrap;}
+.footer-logo{font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:800;color:#fff;letter-spacing:-0.01em;}
+.footer-logo span{color:#818CF8;}
+.footer-links{display:flex;gap:0.45rem;flex-wrap:wrap;}
+.footer-link{display:inline-flex;align-items:center;gap:0.35rem;font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:rgba(255,255,255,0.45);text-decoration:none;padding:0.36rem 0.78rem;border-radius:6px;border:1px solid rgba(255,255,255,0.07);transition:all 0.18s;font-weight:500;}
+.footer-link:hover{color:#fff;border-color:rgba(255,255,255,0.2);background:rgba(255,255,255,0.07);}
+.footer-link.resume-link{background:rgba(79,70,229,0.3);color:rgba(255,255,255,0.85) !important;border-color:rgba(79,70,229,0.4) !important;font-weight:700 !important;}
+.footer-link.resume-link:hover{background:rgba(79,70,229,0.5);color:#fff !important;}
+.footer-copy{width:100%;text-align:center;padding-top:1.2rem;margin-top:1.2rem;border-top:1px solid rgba(255,255,255,0.05);font-family:'JetBrains Mono',monospace;font-size:0.67rem;color:rgba(255,255,255,0.2);}
+
+/* RESPONSIVE */
+@media(max-width:1024px){
+  #hero{grid-template-columns:1fr;min-height:auto;padding-top:60px;}
+  .hero-visual{display:none;}
+  .about-grid{grid-template-columns:1fr;}
+  .pj-card.featured{grid-column:1;display:flex;flex-direction:column;}
+  .pj-card.featured .pj-header{min-height:150px;}
+  .contact-wrap{grid-template-columns:1fr;}
+}
+@media(max-width:768px){
+  :root{--section-gap:70px;}
+  .nav-links,.nav-cta{display:none;}
+  .hamburger{display:flex;}
+  .mobile-sticky-resume{display:flex;}
+  .hero-stats{gap:1.25rem;}
+  .about-cards{grid-template-columns:1fr 1fr;}
+  .edu-card{flex-direction:column;gap:1rem;}
+}
+@media(max-width:480px){
+  :root{--section-gap:55px;}
+  section{padding-left:4%;padding-right:4%;}
+  nav{padding:0 4%;}
+  .hero-btns{flex-direction:column;align-items:flex-start;}
+  .btn-primary,.btn-ghost,.btn-outline{width:100%;justify-content:center;}
+  .about-cards{grid-template-columns:1fr;}
+  .ach-grid{grid-template-columns:1fr 1fr;}
+  .footer-inner{flex-direction:column;align-items:flex-start;}
+}
+</style>
+</head>
+<body>
+
+<a href="#hero" class="skip-link">Skip to main content</a>
+<canvas id="particles" aria-hidden="true"></canvas>
+<div class="grid-bg" aria-hidden="true"></div>
+
+<!-- DRAWER -->
+<div class="drawer-overlay" id="overlay" onclick="closeDrawer()" aria-hidden="true"></div>
+<div class="mobile-drawer" id="drawer" aria-label="Navigation drawer">
+  <a href="#hero" onclick="closeDrawer()">Home</a>
+  <a href="#about" onclick="closeDrawer()">About</a>
+  <a href="#skills" onclick="closeDrawer()">Skills</a>
+  <a href="#sysdesign" onclick="closeDrawer()">System Design</a>
+  <a href="#experience" onclick="closeDrawer()">Experience</a>
+  <a href="#projects" onclick="closeDrawer()">Projects</a>
+  <a href="#achievements" onclick="closeDrawer()">Achievements</a>
+  <a href="#education" onclick="closeDrawer()">Education</a>
+  <a href="#contact" onclick="closeDrawer()">Contact</a>
+  <a href="assets/Grace_Sadhasivam_Resume.pdf" download class="drawer-resume">⬇ Download Resume</a>
+</div>
+
+<!-- NAV -->
+<nav role="navigation" aria-label="Main navigation">
+  <a href="#hero" class="nav-logo" aria-label="Grace Sadhasivam">Grace<span class="dot">.</span></a>
+  <ul class="nav-links" role="list">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#sysdesign">System Design</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#achievements">Achievements</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="assets/Grace_Sadhasivam_Resume.pdf" download class="nav-cta" aria-label="Download Resume">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Resume
+    </a>
+    <button class="hamburger" id="hamburger" onclick="toggleDrawer()" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<main>
+
+<!-- HERO -->
+<section id="hero" aria-label="Introduction">
+  <div class="hero-left">
+    <div class="hero-status" role="status"><span class="sdot" aria-hidden="true"></span>Available · Open to Global Relocation</div>
+    <h1 class="hero-title">Grace<br><span class="line2">Sadhasivam</span></h1>
+    <div class="hero-role" aria-label="Current role">
+      <span class="role-prefix" aria-hidden="true">$ </span>
+      <span id="typed" aria-live="polite"></span><span class="cblink" aria-hidden="true">|</span>
+    </div>
+    <p class="hero-desc">Java Backend Developer with 2+ years of experience building Spring Boot microservices, REST APIs, MongoDB solutions, Elasticsearch integrations, and automated testing frameworks for enterprise applications.</p>
+    <div class="hero-stats" aria-label="Key metrics">
+      <div><div class="stat-num">2+</div><div class="stat-lbl">Years Exp.</div></div>
+      <div><div class="stat-num">10+</div><div class="stat-lbl">APIs Built</div></div>
+      <div><div class="stat-num">5+</div><div class="stat-lbl">Integrations</div></div>
+      <div><div class="stat-num">300+</div><div class="stat-lbl">Test Cases</div></div>
+    </div>
+    <div class="hero-btns">
+      <a href="#projects" class="btn-primary">View Projects</a>
+      <a href="#contact" class="btn-ghost">Contact Me →</a>
+      <a href="assets/Grace_Sadhasivam_Resume.pdf" download class="btn-outline" aria-label="Download Resume PDF">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download CV
+      </a>
+    </div>
+    <div class="hero-socials" aria-label="Social links">
+      <a href="https://github.com/SGraceGrace" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="GitHub">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12c0 4.42 2.87 8.17 6.84 9.49.5.09.68-.22.68-.48v-1.7C6.73 19.91 6.14 18 6.14 18c-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.89 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.63-1.33-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02A9.56 9.56 0 0112 6.8c.85 0 1.71.11 2.51.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10.01 10.01 0 0022 12c0-5.52-4.48-10-10-10z"/></svg>
+        GitHub
+      </a>
+      <a href="https://linkedin.com/in/grace-sadhasivam-116880235" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="LinkedIn">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+        LinkedIn
+      </a>
+      <a href="https://leetcode.com/u/grace58" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="LeetCode">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.483 0a1.374 1.374 0 00-.961.438L7.116 6.226l-3.854 4.126a5.266 5.266 0 00-1.209 2.104 5.35 5.35 0 00-.125 2.223 5.263 5.263 0 001.06 2.066 5.512 5.512 0 001.95 1.444l.538.215-.923.224a5.27 5.27 0 00-1.529.644 5.27 5.27 0 00-1.16 1.038 5.265 5.265 0 00-.72 1.368 5.35 5.35 0 00-.125 2.223 5.263 5.263 0 001.06 2.066 5.512 5.512 0 001.95 1.444 5.35 5.35 0 002.223.125h9.636a5.35 5.35 0 002.223-.125 5.512 5.512 0 001.95-1.444 5.263 5.263 0 001.06-2.066 5.35 5.35 0 00-.125-2.223 5.265 5.265 0 00-.72-1.368 5.27 5.27 0 00-1.16-1.038 5.27 5.27 0 00-1.529-.644l-.923-.224.538-.215a5.512 5.512 0 001.95-1.444 5.263 5.263 0 001.06-2.066 5.35 5.35 0 00-.125-2.223 5.266 5.266 0 00-1.209-2.104L16.477.438A1.374 1.374 0 0015.516 0h-2.033z"/></svg>
+        LeetCode
+      </a>
+    </div>
+  </div>
+  <div class="hero-visual" aria-hidden="true">
+    <div class="tbadge" style="top:8px;left:0;animation-delay:0s;">☕ Java</div>
+    <div class="tbadge" style="top:90px;left:-12px;animation-delay:1.3s;">🍃 Spring Boot</div>
+    <div class="tbadge" style="bottom:85px;left:0;animation-delay:0.7s;">🗄️ MongoDB</div>
+    <div class="tbadge" style="bottom:18px;right:65px;animation-delay:1.9s;">⚡ Elasticsearch</div>
+    <div style="position:relative;width:100%;">
+      <div class="code-window">
+        <div class="win-bar">
+          <div class="wd r"></div><div class="wd y"></div><div class="wd g"></div>
+          <span class="wf">GraceSadhasivam.java</span>
+        </div>
+        <div class="code-body">
+          <div><span class="ln">1</span><span class="cm">// Java Backend Developer</span></div>
+          <div><span class="ln">2</span><span class="kw">@RestController</span></div>
+          <div><span class="ln">3</span><span class="kw">public class</span> <span class="cl">GraceSadhasivam</span> {</div>
+          <div><span class="ln">4</span></div>
+          <div><span class="ln">5</span>&nbsp;&nbsp;<span class="kw">private final</span> <span class="cl">String</span> <span class="va">role</span> = <span class="st">"Backend Engineer"</span>;</div>
+          <div><span class="ln">6</span>&nbsp;&nbsp;<span class="kw">private final</span> <span class="cl">int</span> <span class="va">yearsExp</span> = <span class="nu">2</span>;</div>
+          <div><span class="ln">7</span></div>
+          <div><span class="ln">8</span>&nbsp;&nbsp;<span class="kw">@GetMapping</span>(<span class="st">"/skills"</span>)</div>
+          <div><span class="ln">9</span>&nbsp;&nbsp;<span class="kw">public</span> <span class="cl">List</span>&lt;<span class="cl">String</span>&gt; <span class="fn">getSkills</span>() {</div>
+          <div><span class="ln">10</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">return</span> <span class="cl">List</span>.<span class="fn">of</span>(</div>
+          <div><span class="ln">11</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="st">"Spring Boot"</span>, <span class="st">"MongoDB"</span>,</div>
+          <div><span class="ln">12</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="st">"Microservices"</span>, <span class="st">"Playwright"</span></div>
+          <div><span class="ln">13</span>&nbsp;&nbsp;&nbsp;&nbsp;);</div>
+          <div><span class="ln">14</span>&nbsp;&nbsp;}</div>
+          <div><span class="ln">15</span></div>
+          <div><span class="ln">16</span>&nbsp;&nbsp;<span class="kw">@PostMapping</span>(<span class="st">"/hire"</span>)</div>
+          <div><span class="ln">17</span>&nbsp;&nbsp;<span class="kw">public</span> <span class="cl">ResponseEntity</span> <span class="fn">hireMe</span>() {</div>
+          <div><span class="ln">18</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">return</span> <span class="cl">ResponseEntity</span>.<span class="fn">ok</span>(<span class="st">"Let's build!"</span>);</div>
+          <div><span class="ln">19</span>&nbsp;&nbsp;}</div>
+          <div><span class="ln">20</span>}</div>
+        </div>
+      </div>
+      <div class="hero-photo-wrap">
+        <div class="hero-photo-shape"></div>
+        <img src="assets/grace.jpg" alt="Grace Sadhasivam, Java Backend Developer" class="hero-photo-img" loading="eager">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" aria-labelledby="about-h">
+  <div class="sec-label">Who I Am</div>
+  <h2 class="sec-title" id="about-h">About <span>Me</span></h2>
+  <div class="sec-bar"></div>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>Backend Engineer with <strong>2+ years of experience</strong> building Spring Boot microservices, REST APIs, MongoDB solutions, Elasticsearch integrations, and automated testing frameworks.</p>
+      <p>Experienced in solving <strong>production issues</strong>, designing scalable backend systems, and delivering business-critical features in <strong>Agile environments</strong>. Passionate about clean architecture, reliability, and writing code that scales.</p>
+      <p>Currently working at <strong>TrusTrace</strong> — a global supply chain transparency platform — where I've grown from trainee to full software engineer, owning backend services end-to-end.</p>
+    </div>
+    <div class="about-cards">
+      <div class="about-card"><div class="about-card-num">2+</div><div class="about-card-lbl">Years of professional backend engineering</div></div>
+      <div class="about-card"><div class="about-card-num">10+</div><div class="about-card-lbl">REST APIs built and maintained in production</div></div>
+      <div class="about-card"><div class="about-card-num">P0/P1</div><div class="about-card-lbl">Production issue resolution via Root Cause Analysis</div></div>
+      <div class="about-card"><div class="about-card-num">300+</div><div class="about-card-lbl">Playwright automated test cases from scratch</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" aria-labelledby="skills-h">
+  <div class="sec-label">Technical Stack</div>
+  <h2 class="sec-title" id="skills-h">Skills & <span>Technologies</span></h2>
+  <div class="sec-bar"></div>
+  <p class="sec-desc">Production-hardened skills across backend architecture, databases, testing, and engineering practices.</p>
+  <div class="sk-grid">
+    <div class="sk-card"><div class="skh">☕ Languages</div><div class="stags"><span class="stag">Java</span><span class="stag">SQL</span></div></div>
+    <div class="sk-card"><div class="skh">🍃 Frameworks</div><div class="stags"><span class="stag">Spring Boot</span><span class="stag">Spring Security</span></div></div>
+    <div class="sk-card"><div class="skh">🏗️ Architecture</div><div class="stags"><span class="stag">Microservices</span><span class="stag">RESTful APIs</span><span class="stag">API Integration</span></div></div>
+    <div class="sk-card"><div class="skh">🗄️ Databases</div><div class="stags"><span class="stag">MongoDB</span><span class="stag">MySQL</span><span class="stag">Elasticsearch</span></div></div>
+    <div class="sk-card"><div class="skh">🧪 Testing</div><div class="stags"><span class="stag">Playwright</span><span class="stag">JUnit</span></div></div>
+    <div class="sk-card"><div class="skh">🛠️ Tools & Practices</div><div class="stags"><span class="stag">Git</span><span class="stag">Bitbucket</span><span class="stag">Maven</span><span class="stag">IntelliJ</span><span class="stag">Jira</span><span class="stag">Postman</span><span class="stag">Agile/Scrum</span><span class="stag">RCA</span><span class="stag">AI-Assisted Dev</span></div></div>
+  </div>
+  <div style="margin-top:3rem;">
+    <h3 class="sec-title" style="font-size:1.5rem;margin-bottom:0.5rem;">Technology <span>Showcase</span></h3>
+    <div class="sec-bar"></div>
+    <div class="tech-wall">
+      <div class="tech-item"><div class="tech-logo">☕</div><div class="tech-name">Java</div></div>
+      <div class="tech-item"><div class="tech-logo">🍃</div><div class="tech-name">Spring Boot</div></div>
+      <div class="tech-item"><div class="tech-logo">🔒</div><div class="tech-name">Spring Security</div></div>
+      <div class="tech-item"><div class="tech-logo">🏗️</div><div class="tech-name">Microservices</div></div>
+      <div class="tech-item"><div class="tech-logo">🍃</div><div class="tech-name">MongoDB</div></div>
+      <div class="tech-item"><div class="tech-logo">🐬</div><div class="tech-name">MySQL</div></div>
+      <div class="tech-item"><div class="tech-logo">🔍</div><div class="tech-name">Elasticsearch</div></div>
+      <div class="tech-item"><div class="tech-logo">🐳</div><div class="tech-name">Docker</div></div>
+      <div class="tech-item"><div class="tech-logo">🐙</div><div class="tech-name">Git</div></div>
+      <div class="tech-item"><div class="tech-logo">📦</div><div class="tech-name">Maven</div></div>
+      <div class="tech-item"><div class="tech-logo">🎭</div><div class="tech-name">Playwright</div></div>
+      <div class="tech-item"><div class="tech-logo">🧪</div><div class="tech-name">JUnit</div></div>
+    </div>
+  </div>
+  <div style="margin-top:3rem;">
+    <h3 class="sec-title" style="font-size:1.5rem;margin-bottom:0.5rem;">Currently <span>Learning</span></h3>
+    <div class="sec-bar"></div>
+    <p class="sec-desc" style="margin-bottom:1.5rem;">Expanding into cloud-native and distributed systems technologies.</p>
+    <div class="learning-grid">
+      <div class="learn-badge"><span class="l-icon">⚡</span>Redis<span class="l-status">In Progress</span></div>
+      <div class="learn-badge"><span class="l-icon">⚓</span>Kubernetes<span class="l-status">Learning</span></div>
+      <div class="learn-badge"><span class="l-icon">🏗️</span>Advanced System Design<span class="l-status">Ongoing</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- SYSTEM DESIGN -->
+<section id="sysdesign" aria-labelledby="sd-h">
+  <div class="sec-label">Architecture Knowledge</div>
+  <h2 class="sec-title" id="sd-h">System <span>Design</span></h2>
+  <div class="sec-bar"></div>
+  <p class="sec-desc">Backend architecture patterns and distributed system concepts I apply in production engineering.</p>
+  <div class="sd-grid">
+    <div class="sd-card"><div class="sd-icon">🚪</div><div class="sd-title">API Gateway</div><div class="sd-desc">Centralized entry point routing requests to microservices with auth, rate limiting, and load balancing.</div></div>
+    <div class="sd-card"><div class="sd-icon">🏗️</div><div class="sd-title">Microservices</div><div class="sd-desc">Decomposing monoliths into independently deployable services with clear domain boundaries.</div></div>
+    <div class="sd-card"><div class="sd-icon">🔐</div><div class="sd-title">JWT Authentication</div><div class="sd-desc">Stateless token-based auth with signed payloads for secure, scalable API access control.</div></div>
+    <div class="sd-card"><div class="sd-icon">🔄</div><div class="sd-title">Refresh Token Strategy</div><div class="sd-desc">Sliding session pattern with short-lived access tokens and long-lived refresh tokens for security.</div></div>
+    <div class="sd-card"><div class="sd-icon">⚡</div><div class="sd-title">Redis Caching</div><div class="sd-desc">In-memory data caching to reduce DB load and serve hot data with sub-millisecond latency.</div></div>
+    <div class="sd-card"><div class="sd-icon">📨</div><div class="sd-title">Event-Driven Architecture</div><div class="sd-desc">Async message queues enabling loosely coupled services and resilient distributed workflows.</div></div>
+    <div class="sd-card"><div class="sd-icon">🚦</div><div class="sd-title">Rate Limiting</div><div class="sd-desc">Token bucket and sliding window algorithms protecting APIs from abuse and ensuring fair usage.</div></div>
+    <div class="sd-card"><div class="sd-icon">⚙️</div><div class="sd-title">Circuit Breaker Pattern</div><div class="sd-desc">Fault tolerance mechanism preventing cascading failures in distributed service dependencies.</div></div>
+    <div class="sd-card"><div class="sd-icon">🗄️</div><div class="sd-title">Database Optimization</div><div class="sd-desc">Indexing strategies, query optimization, and schema design for MongoDB and MySQL at scale.</div></div>
+    <div class="sd-card"><div class="sd-icon">🔍</div><div class="sd-title">Elasticsearch Search</div><div class="sd-desc">Full-text search architecture with inverted indexes, analyzers, and aggregation pipelines.</div></div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience" aria-labelledby="exp-h">
+  <div class="sec-label">Career History</div>
+  <h2 class="sec-title" id="exp-h">Work <span>Experience</span></h2>
+  <div class="sec-bar"></div>
+  <p class="sec-desc">Building production-grade distributed systems at a global supply chain transparency platform.</p>
+  <div class="exp-timeline">
+    <article class="exp-card">
+      <div class="exp-top">
+        <h3 class="exp-role">Software Engineer</h3>
+        <span class="exp-pill now">● Jun 2024 – Present</span>
+      </div>
+      <div class="exp-co">TrusTrace · Coimbatore, India</div>
+      <ul class="exp-ul">
+        <li>Built and maintained 10+ RESTful APIs using Java and Spring Boot in a microservices architecture supporting distributed enterprise systems.</li>
+        <li>Integrated 5+ internal and external APIs enabling seamless data exchange across distributed systems.</li>
+        <li>Diagnosed and resolved P0/P1 production issues in MongoDB and Elasticsearch through Root Cause Analysis, improving system uptime.</li>
+        <li>Engineered 300+ automated test cases with Playwright — growing QA coverage from 0% to 90%, significantly reducing regression cycles.</li>
+        <li>Delivered a complete backend feature in 1 week using AI-assisted development, cutting dev time by 60%.</li>
+        <li>Contributed to Agile/Scrum sprints, code reviews, and cross-team collaboration with frontend and QA engineers.</li>
+      </ul>
+    </article>
+    <article class="exp-card">
+      <div class="exp-top">
+        <h3 class="exp-role">Software Engineer Trainee</h3>
+        <span class="exp-pill">Sep 2023 – May 2024</span>
+      </div>
+      <div class="exp-co">TrusTrace · Coimbatore, India</div>
+      <ul class="exp-ul">
+        <li>Resolved 10+ production bugs within the first month on live Spring Boot services, improving application stability.</li>
+        <li>Supported backend development across multiple microservices — REST API integration, schema updates, MongoDB, and Elasticsearch.</li>
+      </ul>
+    </article>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" aria-labelledby="proj-h">
+  <div class="sec-label">Portfolio</div>
+  <h2 class="sec-title" id="proj-h">Featured <span>Projects</span></h2>
+  <div class="sec-bar"></div>
+  <p class="sec-desc">Backend engineering projects showcasing real-world architecture patterns and problem-solving.</p>
+  <div class="pj-grid">
+    <article class="pj-card featured" aria-label="FoodieHub - Flagship Project">
+      <div class="pj-header">
+        <div class="pj-top-line"></div>
+        <div class="pj-glow"></div>
+        <div class="pj-code">@RestController<br>@RequestMapping("/api/v1")<br>public class FoodieHubGateway {<br>&nbsp;&nbsp;// API Gateway + Routing<br>&nbsp;&nbsp;// JWT Auth + Refresh Tokens<br>&nbsp;&nbsp;// Role-Based Access Control<br>&nbsp;&nbsp;// Restaurant Management<br>&nbsp;&nbsp;// Order Management APIs<br>&nbsp;&nbsp;// Swagger / OpenAPI Docs<br>}</div>
+      </div>
+      <div class="pj-body">
+        <div class="pj-num">FLAGSHIP PROJECT</div>
+        <span class="featured-badge">★ Featured Project</span>
+        <h3 class="pj-name">FoodieHub — Food Ordering Platform</h3>
+        <div class="pj-tags"><span class="ptag">Java</span><span class="ptag">Spring Boot</span><span class="ptag">MySQL</span><span class="ptag">JWT</span><span class="ptag">Spring Security</span><span class="ptag">Swagger</span></div>
+        <p class="pj-desc">Enterprise-grade food ordering backend built on microservices architecture. Centralized API Gateway handles routing, authentication, and rate limiting. Implements JWT stateless auth with Refresh Token flow and Role-Based Access Control for Admins, Restaurants, and Customers.</p>
+        <div class="arch-section">
+          <div class="arch-title">Architecture Highlights</div>
+          <div class="arch-tags">
+            <span class="arch-tag">API Gateway</span>
+            <span class="arch-tag">JWT Authentication</span>
+            <span class="arch-tag">Refresh Token Flow</span>
+            <span class="arch-tag">RBAC</span>
+            <span class="arch-tag">Microservices</span>
+            <span class="arch-tag">Restaurant Mgmt</span>
+            <span class="arch-tag">Order Mgmt</span>
+            <span class="arch-tag">Swagger/OpenAPI</span>
+          </div>
+        </div>
+        <div class="pj-actions">
+          <a href="https://github.com/SGraceGrace/foodieHub" target="_blank" rel="noopener noreferrer" class="pj-btn">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12c0 4.42 2.87 8.17 6.84 9.49.5.09.68-.22.68-.48v-1.7C6.73 19.91 6.14 18 6.14 18c-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.89 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.63-1.33-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02A9.56 9.56 0 0112 6.8c.85 0 1.71.11 2.51.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10.01 10.01 0 0022 12c0-5.52-4.48-10-10-10z"/></svg>
+            View on GitHub
+          </a>
+        </div>
+      </div>
+    </article>
+    <article class="pj-card" aria-label="E-Learning Platform">
+      <div class="pj-header"><div class="pj-top-line"></div><div class="pj-glow"></div><div class="pj-code">@Service<br>public class CourseService {<br>&nbsp;&nbsp;// Enrollment APIs<br>&nbsp;&nbsp;// Progress Tracking<br>&nbsp;&nbsp;// MongoDB Storage<br>}</div></div>
+      <div class="pj-body">
+        <div class="pj-num">PROJECT_02</div>
+        <h3 class="pj-name">E-Learning Platform</h3>
+        <div class="pj-tags"><span class="ptag">Java</span><span class="ptag">Spring Boot</span><span class="ptag">MongoDB</span></div>
+        <p class="pj-desc">Scalable e-learning backend with RESTful APIs for course enrollment, content delivery, and learner progress tracking using MongoDB's document model for flexible storage.</p>
+        <div class="pj-actions">
+          <a href="https://github.com/DIVYA-BALU/tt-frontend-assignments/tree/grace/WisdomWays" target="_blank" rel="noopener noreferrer" class="pj-btn">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12c0 4.42 2.87 8.17 6.84 9.49.5.09.68-.22.68-.48v-1.7C6.73 19.91 6.14 18 6.14 18c-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.89 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.63-1.33-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02A9.56 9.56 0 0112 6.8c.85 0 1.71.11 2.51.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10.01 10.01 0 0022 12c0-5.52-4.48-10-10-10z"/></svg>
+            View on GitHub
+          </a>
+        </div>
+      </div>
+    </article>
+    <article class="pj-card" aria-label="News Platform">
+      <div class="pj-header"><div class="pj-top-line"></div><div class="pj-glow"></div><div class="pj-code">@CrossOrigin<br>@RestController<br>public class ArticleController {<br>&nbsp;&nbsp;// Angular + Java Stack<br>&nbsp;&nbsp;// Categories · Users<br>}</div></div>
+      <div class="pj-body">
+        <div class="pj-num">PROJECT_03</div>
+        <h3 class="pj-name">News Platform</h3>
+        <div class="pj-tags"><span class="ptag">Java</span><span class="ptag">Spring Boot</span><span class="ptag">Angular</span><span class="ptag">MongoDB</span></div>
+        <p class="pj-desc">Full-stack news application with category-based content delivery. REST APIs manage articles, categories, and user interactions — Angular on the frontend, Spring Boot on the backend.</p>
+        <div class="pj-actions">
+          <a href="https://github.com/DIVYA-BALU/tt-frontend-assignments/tree/grace/FinalProject" target="_blank" rel="noopener noreferrer" class="pj-btn">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12c0 4.42 2.87 8.17 6.84 9.49.5.09.68-.22.68-.48v-1.7C6.73 19.91 6.14 18 6.14 18c-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.89 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.63-1.33-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02A9.56 9.56 0 0112 6.8c.85 0 1.71.11 2.51.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10.01 10.01 0 0022 12c0-5.52-4.48-10-10-10z"/></svg>
+            View on GitHub
+          </a>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ACHIEVEMENTS -->
+<section id="achievements" aria-labelledby="ach-h">
+  <div class="sec-label">Impact & Results</div>
+  <h2 class="sec-title" id="ach-h">Professional <span>Achievements</span></h2>
+  <div class="sec-bar"></div>
+  <p class="sec-desc">Measurable impact delivered in real production environments across testing, reliability, and speed.</p>
+  <div class="ach-grid">
+    <div class="ach-card"><div class="ach-icon">🎭</div><div class="ach-num" data-target="300">0</div><div class="ach-label">Test Cases Written</div><div class="ach-sub">Playwright suite built from 0% coverage</div></div>
+    <div class="ach-card"><div class="ach-icon">✅</div><div class="ach-num" data-target="90" data-suffix="%">0%</div><div class="ach-label">QA Coverage</div><div class="ach-sub">Grew automation from zero to 90%</div></div>
+    <div class="ach-card"><div class="ach-icon">🚨</div><div class="ach-num">P0/P1</div><div class="ach-label">Issue Resolution</div><div class="ach-sub">Critical production incidents resolved via RCA</div></div>
+    <div class="ach-card"><div class="ach-icon">🤖</div><div class="ach-num" data-target="60" data-suffix="%">0%</div><div class="ach-label">Faster Delivery</div><div class="ach-sub">Feature delivered in 1 week via AI-assisted dev</div></div>
+    <div class="ach-card"><div class="ach-icon">💻</div><div class="ach-num" data-target="250">0</div><div class="ach-label">LeetCode Problems</div><div class="ach-sub">Consistent DSA practice (grace58)</div></div>
+    <div class="ach-card"><div class="ach-icon">🔗</div><div class="ach-num" data-target="5">0</div><div class="ach-label">API Integrations</div><div class="ach-sub">Internal & external enterprise integrations</div></div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education" aria-labelledby="edu-h">
+  <div class="sec-label">Academic Background</div>
+  <h2 class="sec-title" id="edu-h">Education & <span>Certifications</span></h2>
+  <div class="sec-bar"></div>
+  <div class="edu-card">
+    <div class="edu-icon-box">🎓</div>
+    <div>
+      <h3 class="edu-deg">B.E. Computer Science & Engineering</h3>
+      <div class="edu-school">Karpagam College of Engineering, Coimbatore</div>
+      <div class="edu-year">2020 – 2024</div>
+      <span class="gpa">★ CGPA: 9.18 / 10.0</span>
+    </div>
+  </div>
+  <div class="cert-grid">
+    <div class="cert-c"><span class="ci">🏅</span><span>Google Prompting Essentials</span></div>
+    <div class="cert-c"><span class="ci">🗣️</span><span>English (Professional) · Tamil (Native)</span></div>
+    <div class="cert-c"><span class="ci">💻</span><a href="https://leetcode.com/u/grace58" target="_blank" rel="noopener noreferrer" style="color:var(--indigo);text-decoration:none;font-weight:600;">LeetCode: grace58 ↗</a></div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" aria-labelledby="contact-h">
+  <div class="sec-label">Let's Connect</div>
+  <h2 class="sec-title" id="contact-h">Get in <span>Touch</span></h2>
+  <div class="sec-bar"></div>
+  <p class="sec-desc">Open to backend engineering roles globally. Let's build something exceptional together.</p>
+  <div class="contact-wrap">
+    <div class="ct-links">
+      <div class="ct-item relocation">
+        <span class="ct-icon">🌍</span>
+        <div><div class="ct-lbl">Relocation</div><div class="ct-val">Open to Global Relocation · Namakkal, TN</div></div>
+      </div>
+      <a href="mailto:gracechandra75@gmail.com" class="ct-item"><span class="ct-icon">✉️</span><div><div class="ct-lbl">Email</div><div class="ct-val">gracechandra75@gmail.com</div></div></a>
+      <a href="tel:+919791685849" class="ct-item"><span class="ct-icon">📱</span><div><div class="ct-lbl">Phone</div><div class="ct-val">+91 97916 85849</div></div></a>
+      <a href="https://linkedin.com/in/grace-sadhasivam-116880235" target="_blank" rel="noopener noreferrer" class="ct-item"><span class="ct-icon">💼</span><div><div class="ct-lbl">LinkedIn</div><div class="ct-val">grace-sadhasivam-116880235</div></div></a>
+      <a href="https://github.com/SGraceGrace" target="_blank" rel="noopener noreferrer" class="ct-item"><span class="ct-icon">🐙</span><div><div class="ct-lbl">GitHub</div><div class="ct-val">SGraceGrace</div></div></a>
+      <a href="https://leetcode.com/u/grace58" target="_blank" rel="noopener noreferrer" class="ct-item"><span class="ct-icon">💻</span><div><div class="ct-lbl">LeetCode</div><div class="ct-val">grace58</div></div></a>
+    </div>
+    <div class="cta-box">
+      <div>
+        <p class="cta-h">Ready to <span>hire</span> a backend engineer?</p>
+        <p class="cta-p">2+ years of production Java experience. Spring Boot, microservices, MongoDB — I build systems that scale and stay reliable under pressure. Open to global opportunities.</p>
+      </div>
+      <div class="cta-actions">
+        <a href="mailto:gracechandra75@gmail.com" class="cta-btn">✉ Send Email</a>
+        <a href="assets/Grace_Sadhasivam_Resume.pdf" download class="cta-dl">⬇ Download Resume</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer role="contentinfo">
+  <div class="footer-inner">
+    <div class="footer-logo">Grace <span>Sadhasivam</span></div>
+    <div class="footer-links">
+      <a href="assets/Grace_Sadhasivam_Resume.pdf" download class="footer-link resume-link">⬇ Resume</a>
+      <a href="https://linkedin.com/in/grace-sadhasivam-116880235" target="_blank" rel="noopener noreferrer" class="footer-link">💼 LinkedIn</a>
+      <a href="https://github.com/SGraceGrace" target="_blank" rel="noopener noreferrer" class="footer-link">🐙 GitHub</a>
+      <a href="https://leetcode.com/u/grace58" target="_blank" rel="noopener noreferrer" class="footer-link">💻 LeetCode</a>
+      <a href="mailto:gracechandra75@gmail.com" class="footer-link">✉ Email</a>
+    </div>
+  </div>
+  <div class="footer-copy">&lt;/ Built by Grace Sadhasivam — Java Backend Developer &gt; · © 2025</div>
+</footer>
+
+<a href="assets/Grace_Sadhasivam_Resume.pdf" download class="mobile-sticky-resume" id="stickyBtn" aria-label="Download Resume">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+  Resume
+</a>
+
+<script>
+// PARTICLES — subtle indigo on white
+const cv=document.getElementById('particles'),cx=cv.getContext('2d');
+let W,H,rT;
+function resize(){W=cv.width=window.innerWidth;H=cv.height=window.innerHeight;}
+resize();
+window.addEventListener('resize',()=>{clearTimeout(rT);rT=setTimeout(resize,200);});
+const pts=Array.from({length:38},()=>({
+  x:Math.random()*window.innerWidth,y:Math.random()*window.innerHeight,
+  vx:(Math.random()-.5)*.16,vy:(Math.random()-.5)*.16,
+  r:Math.random()*.8+.3,a:Math.random()*.1+.03
+}));
+let lastT=0;
+function draw(t){
+  requestAnimationFrame(draw);
+  if(t-lastT<50)return;
+  lastT=t;
+  cx.clearRect(0,0,W,H);
+  pts.forEach((p,i)=>{
+    p.x+=p.vx;p.y+=p.vy;
+    if(p.x<0||p.x>W)p.vx*=-1;
+    if(p.y<0||p.y>H)p.vy*=-1;
+    cx.beginPath();cx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    cx.fillStyle=`rgba(79,70,229,${p.a})`;cx.fill();
+    for(let j=i+1;j<pts.length;j++){
+      const q=pts[j],d=Math.hypot(p.x-q.x,p.y-q.y);
+      if(d<115){cx.beginPath();cx.moveTo(p.x,p.y);cx.lineTo(q.x,q.y);cx.strokeStyle=`rgba(79,70,229,${.028*(1-d/115)})`;cx.lineWidth=.4;cx.stroke();}
+    }
+  });
+}
+requestAnimationFrame(draw);
+
+// TYPED
+const phrases=['Java Backend Developer','Spring Boot Engineer','Microservices Architect','API Integration Expert','Open to Global Roles'];
+let pi=0,ci=0,del=false;
+function type(){
+  document.getElementById('typed').textContent=phrases[pi].slice(0,ci);
+  if(!del){ci++;if(ci>phrases[pi].length){del=true;setTimeout(type,1800);return;}}
+  else{ci--;if(ci<0){del=false;pi=(pi+1)%phrases.length;setTimeout(type,400);return;}}
+  setTimeout(type,del?36:65);
+}
+type();
+
+// ACTIVE NAV ON SCROLL
+const secs=document.querySelectorAll('section[id]');
+const navAs=document.querySelectorAll('.nav-links a,.mobile-drawer a');
+const io=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      navAs.forEach(a=>a.classList.remove('active'));
+      document.querySelectorAll(`a[href="#${e.target.id}"]`).forEach(a=>a.classList.add('active'));
+    }
+  });
+},{threshold:0.25,rootMargin:'-64px 0px 0px 0px'});
+secs.forEach(s=>io.observe(s));
+
+// COUNTERS
+function animCounter(el){
+  const target=parseInt(el.dataset.target),suffix=el.dataset.suffix||'';
+  if(isNaN(target))return;
+  let cur=0;const step=Math.ceil(target/45);
+  const t=setInterval(()=>{cur=Math.min(cur+step,target);el.textContent=cur+suffix;if(cur>=target)clearInterval(t);},28);
+}
+const achObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.querySelectorAll('.ach-num[data-target]').forEach(animCounter);achObs.unobserve(e.target);}});
+},{threshold:0.2});
+const achSec=document.getElementById('achievements');
+if(achSec)achObs.observe(achSec);
+
+// DRAWER
+function toggleDrawer(){
+  const o=document.getElementById('drawer').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('open');
+  document.getElementById('hamburger').classList.toggle('open');
+  document.getElementById('hamburger').setAttribute('aria-expanded',o);
+}
+function closeDrawer(){
+  ['drawer','overlay','hamburger'].forEach(id=>document.getElementById(id).classList.remove('open'));
+  document.getElementById('hamburger').setAttribute('aria-expanded','false');
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDrawer();});
+
+// MOBILE STICKY
+const sb=document.getElementById('stickyBtn');
+function checkMobile(){sb.style.display=window.innerWidth<=768?'flex':'none';}
+checkMobile();
+window.addEventListener('resize',checkMobile);
+</script>
+</body>
+</html>
